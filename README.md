@@ -1,2 +1,60 @@
-# passwordgenerator
-It is a tool that generates passwords based on the given guidelines that you set to create an unpredictable strong password for your accounts.  The Password generator tool creates a random and customized password for users that helps them to create a strong password which provides greater securityThe objective of this project is to create a password generator using python. The password generator project will be build using python modules like Tkinter, random, string, pyperclip.  In this project, the user has to select the password length and then click on the “Generate Password” button. It will show the generated password below. If the user clicks on the “Copy To Clipboard” button, then it will copy the password automatically.
+#importing Libraries
+
+from tkinter import *
+import random, string
+import pyperclip
+
+
+
+###initialize window
+
+root =Tk()
+root.geometry("400x400")
+root.resizable(0,0)
+root.title("DataFlair - PASSWORD GENERATOR")
+
+#heading
+heading = Label(root, text = 'PASSWORD GENERATOR' , font ='arial 15 bold').pack()
+Label(root, text ='DataFlair', font ='arial 15 bold').pack(side = BOTTOM)
+
+
+
+###select password length
+pass_label = Label(root, text = 'PASSWORD LENGTH', font = 'arial 10 bold').pack()
+pass_len = IntVar()
+length = Spinbox(root, from_ = 8, to_ = 32 , textvariable = pass_len , width = 15).pack()
+
+
+
+#####define function
+
+pass_str = StringVar()
+
+def Generator():
+    password = ''
+    for x in range (0,4):
+        password = random.choice(string.ascii_uppercase)+random.choice(string.ascii_lowercase)+random.choice(string.digits)+random.choice(string.punctuation)
+    for y in range(pass_len.get()- 4):
+        password = password+random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits + string.punctuation)
+    pass_str.set(password)
+   
+
+
+###button
+
+Button(root, text = "GENERATE PASSWORD" , command = Generator ).pack(pady= 5)
+
+Entry(root , textvariable = pass_str).pack()
+
+########function to copy
+
+def Copy_password():
+    pyperclip.copy(pass_str.get())
+
+Button(root, text = 'COPY TO CLIPBOARD', command = Copy_password).pack(pady=5)
+
+
+
+
+# loop to run program
+root.mainloop()
